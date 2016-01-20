@@ -3,6 +3,7 @@ package com.udacity.gamedev.stickfigure;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 /**
  * TODO: Start here
@@ -20,20 +21,42 @@ import com.badlogic.gdx.graphics.GL20;
  */
 public class StickFigure extends ApplicationAdapter {
 
+    ShapeRenderer shapeRenderer;
+
     @Override
     public void create() {
-
+        shapeRenderer = new ShapeRenderer();
     }
 
     @Override
     public void dispose() {
-
+        shapeRenderer.dispose();
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.circle(400, 400, 40);
+        shapeRenderer.end();
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+        shapeRenderer.line(400, 360, 400, 200);
 
+        int yOffset = 30;
+        int xOffset = 60;
+        int handY = 320;
+        int legY = 200;
+        int centerX = 400;
+
+        //hands
+        shapeRenderer.line(centerX, handY, centerX + xOffset, handY - yOffset);
+        shapeRenderer.line(centerX, handY, centerX - xOffset, handY - yOffset);
+
+        //legs
+        shapeRenderer.line(centerX, legY, centerX + xOffset, legY - yOffset);
+        shapeRenderer.line(centerX, legY, centerX - xOffset, legY - yOffset);
+
+        shapeRenderer.end();
     }
 }

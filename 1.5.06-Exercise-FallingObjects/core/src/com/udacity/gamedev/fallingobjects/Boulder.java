@@ -14,7 +14,7 @@ public class Boulder {
     private static final Color COLOR = Color.RED;
 
     // TODO: Declare a constant holding the acceleration due to gravity. -20 works well
-
+    float g = -20;
 
     Vector2 position;
     Vector2 velocity;
@@ -29,7 +29,7 @@ public class Boulder {
         position = new Vector2();
 
         // TODO: Set the initial velocity to zero in both directions
-        velocity = new Vector2(0, -200);
+        velocity = new Vector2(0, 0);
 
         radius = viewport.getWorldWidth() * RADIUS_RATIO;
         position.y = viewport.getWorldHeight() + radius;
@@ -40,7 +40,7 @@ public class Boulder {
 
     public void update(float delta){
         // TODO: Apply gravitational acceleration to the vertical velocity
-
+        velocity.add(0, g);
 
         position.x += delta * velocity.x;
         position.y += delta * velocity.y;

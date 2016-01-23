@@ -3,9 +3,15 @@ package com.udacity.gamedev.icicles;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
 public class IciclesScreen implements Screen {
@@ -16,19 +22,19 @@ public class IciclesScreen implements Screen {
     ShapeRenderer renderer;
 
     // TODO: Add ScreenViewport for HUD
-
+    ScreenViewport hudViewport;
 
     // TODO: Add SpriteBatch
-
+    SpriteBatch spriteBatch;
 
     // TODO: Add BitmapFont
-
+    BitmapFont bitmapFont;
 
     Player player;
     Icicles icicles;
 
     // TODO: Add int to hold the top score
-
+    int topScore;
 
     @Override
     public void show() {
@@ -38,22 +44,22 @@ public class IciclesScreen implements Screen {
         renderer.setAutoShapeType(true);
 
         // TODO: Initialize the HUD viewport
-
+        hudViewport = new ScreenViewport();
 
         // TODO: Initialize the SpriteBatch
-
+        spriteBatch = new SpriteBatch();
 
         // TODO: Initialize the BitmapFont
-
+        bitmapFont = new BitmapFont();
 
         // TODO: Give the font a linear TextureFilter
-
+        bitmapFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         player = new Player(iciclesViewport);
         icicles = new Icicles(iciclesViewport);
 
         // TODO: Set top score to zero
-
+        topScore = 0;
     }
 
     @Override
@@ -61,10 +67,10 @@ public class IciclesScreen implements Screen {
         iciclesViewport.update(width, height, true);
 
         // TODO: Update HUD viewport
-
+        hudViewport.update(width, height, true);
 
         // TODO: Set font scale to min(width, height) / reference screen size
-
+        bitmapFont.getData().setScale(Math.min(width, height) / Constants.HUD_SIZE);
 
         player.init();
         icicles.init();
@@ -74,7 +80,7 @@ public class IciclesScreen implements Screen {
     public void dispose() {
         renderer.dispose();
         // TODO: Dispose of the SpriteBatch
-
+        spriteBatch.dispose();
     }
 
 
@@ -98,25 +104,31 @@ public class IciclesScreen implements Screen {
         renderer.end();
 
         // TODO: Set the top score to max(topScore, iciclesDodges)
-
+        topScore = Math.max(topScore, icicles.iciclesDodged);
 
         // TODO: Apply the HUD viewport
-
+        hudViewport.apply();
 
         // TODO: Set the SpriteBatch's projection matrix
-
+        spriteBatch.setProjectionMatrix(hudViewport.getCamera().combined);
 
         // TODO: Begin the SpriteBatch
-
+        spriteBatch.begin();
 
         // TODO: Draw the number of player deaths in the top left
-
+        bitmapFont.draw(spriteBatch, "Deaths: " + player.deathCount, Constants.HUD_MARGIN, hudViewport.getWorldHeight() - Constants.HUD_MARGIN);
 
         // TODO: Draw the score and top score in the top right
-
+        bitmapFont.draw(spriteBatch,
+                "Score: " + icicles.iciclesDodged + "\nTop score: " + topScore,
+                hudViewport.getWorldWidth() - Constants.HUD_MARGIN,
+                hudViewport.getWorldHeight() - Constants.HUD_MARGIN,
+                0,
+                Align.right,
+                false);
 
         // TODO: End the SpriteBatch
-
+        spriteBatch.end();
 
     }
 

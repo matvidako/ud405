@@ -34,5 +34,18 @@ public class Constants {
 
 
     // TODO: Create Difficulty enum holding the spawn rate and label for each difficulty
+    enum Difficulty {
+        EASY("Cold", 5),
+        NORMAL("Colder", 10),
+        HARD("Coldest", 20);
+
+        public final String label;
+        public final int spawnRate;
+
+        Difficulty(String label, int spawnRate) {
+            this.label = label;
+            this.spawnRate = spawnRate;
+        }
+    }
 
 }

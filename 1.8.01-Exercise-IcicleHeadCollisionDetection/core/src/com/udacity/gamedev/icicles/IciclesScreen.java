@@ -49,8 +49,9 @@ public class IciclesScreen implements Screen {
         icicles.update(delta);
         player.update(delta);
         // TODO: Check if the player was hit by an icicle. If so, reset the icicles.
-
-
+        if(player.hitByIcicle(icicles)) {
+            icicles.init();
+        }
 
         iciclesViewport.apply(true);
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, 1);

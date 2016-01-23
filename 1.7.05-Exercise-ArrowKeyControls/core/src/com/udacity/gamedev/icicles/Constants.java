@@ -14,7 +14,7 @@ public class Constants {
     public static final Color PLAYER_COLOR = Color.BLACK;
 
     // TODO: Add Constant for player movement speed
-
+    public static final float MOVE_SPEED = 5f;
     public static final float ICICLES_HEIGHT = 1.0f;
     public static final float ICICLES_WIDTH = 0.5f;
     public static final Color ICICLE_COLOR = Color.WHITE;
